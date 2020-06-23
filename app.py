@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 from time import sleep
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from os import path
@@ -17,9 +18,10 @@ class MyHandler(FileSystemEventHandler):
         self.file_cache[key] = True
         print(f'{event.src_path} has been {event.event_type}')
         try:
-            web_browser.refresh()
-        except:
+            web_browser.execute_script("location.reload();")
+        except Exception as e:
             observer.stop()
+            print(e)
             print('Browser is not running!\nPress CTRL+C to exit.')
 
 
